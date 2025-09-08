@@ -1,7 +1,7 @@
 ### How to make your own:
 ## Requirements
 
-have python 3.8+
+have python 3.8+ and
 have atleast 4 braincells 
 
 ## Usage Guide
