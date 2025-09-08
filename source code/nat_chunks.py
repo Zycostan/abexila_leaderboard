@@ -6,8 +6,7 @@ def parse_nation_chunks(filename):
     
     with open(filename, 'r', encoding='utf-8') as file:
         content = file.read()
-        
-        # Regex to extract nation and chunks
+
         nation_pattern = re.compile(r'This land belongs to nation ([^:]+)')
         chunks_pattern = re.compile(r'Chunks: (\d+)')
         
@@ -26,7 +25,6 @@ def parse_nation_chunks(filename):
     return nation_chunks
 
 
-# Specify input and output filenames
 input_filename = 'markers.txt'
 output_filename = 'chunks.txt'
 
