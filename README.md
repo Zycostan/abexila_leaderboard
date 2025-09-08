@@ -2,11 +2,8 @@
 ## Requirements
 
 have python 3.8+
-Install dependencies
+have atleast 4 braincells 
 
-```
-get matplotlib
-```
 ## Usage Guide
 
 ### 1. Get the `markers.json` URL
