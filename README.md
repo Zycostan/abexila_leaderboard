@@ -1,7 +1,7 @@
 ### How to make your own:
 ## Requirements
 
-have python 3.8+ and
+have python 3.8+
 have atleast 4 braincells 
 
 ## Usage Guide
@@ -44,7 +44,7 @@ python nat_wealth.py
 
 parses `markers.txt` and outpus nat wealth into `balance.txt`.
 
-### 5. Nation Chunk Analysis
+### 5. Nation Chunks lmao
 
 Run:
 
