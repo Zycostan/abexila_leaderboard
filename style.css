@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    background: #ffffff;
+    color: #000000;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: left;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #a2a9b1;
+    padding-bottom: 15px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 5px;
+    color: #000000;
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #54595d;
+    font-style: italic;
+}
+
+.nav {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #a2a9b1;
+}
+
+.tab-button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: #0645ad;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 0;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+    text-decoration: underline;
+}
+
+.tab-button.active {
+    color: #000000;
+    border-bottom: 2px solid #0645ad;
+    font-weight: bold;
+}
+
+.main {
+    background: #ffffff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin-bottom: 5px;
+    color: #000000;
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+}
+
+.section-header p {
+    color: #54595d;
+    font-size: 0.9rem;
+}
+
+.rankings {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #a2a9b1;
+}
+
+.nation-card {
+    display: table-row;
+    border-bottom: 1px solid #eaecf0;
+}
+
+.nation-card:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.nation-card:hover {
+    background: #eaf3ff;
+}
+
+.rank,
+.nation-info,
+.primary-value {
+    display: table-cell;
+    padding: 12px 8px;
+    vertical-align: top;
+    border-right: 1px solid #eaecf0;
+}
+
+.rank {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    color: #000000;
+    font-size: 1rem;
+}
+
+.nation-info {
+    width: auto;
+}
+
+.nation-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0645ad;
+    margin-bottom: 3px;
+}
+
+.nation-level {
+    display: inline;
+    color: #54595d;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.nation-stats {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: #54595d;
+}
+
+.stat {
+    display: inline;
+    margin-right: 15px;
+}
+
+.primary-value {
+    width: 120px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #000000;
+    border-right: none;
+}
+
+.footer {
+    text-align: center;
+    color: #54595d;
+    font-size: 0.85rem;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #a2a9b1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .rankings {
+        display: block;
+    }
+    
+    .nation-card {
+        display: block;
+        border: 1px solid #a2a9b1;
+        margin-bottom: 10px;
+        background: #ffffff;
+    }
+    
+    .nation-card:nth-child(even) {
+        background: #ffffff;
+    }
+    
+    .rank,
+    .nation-info,
+    .primary-value {
+        display: block;
+        border: none;
+        padding: 8px 12px;
+    }
+    
+    .rank {
+        background: #f8f9fa;
+        text-align: left;
+        border-bottom: 1px solid #eaecf0;
+    }
+    
+    .primary-value {
+        text-align: left;
+        border-top: 1px solid #eaecf0;
+        background: #f8f9fa;
+    }
+}
