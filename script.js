@@ -18,9 +18,7 @@ class NationsRankings {
             }
             const data = await response.json();
 
-            // Optional: log the first item to verify format
             console.log('First nation:', data[0]);
-
             this.nations = data;
             console.log(`Loaded ${this.nations.length} nations`);
         } catch (error) {
@@ -39,19 +37,16 @@ class NationsRankings {
     }
 
     switchTab(tabName) {
-        // Update active tab button
         document.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.remove('active');
         });
         document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
 
-        // Update active tab content
         document.querySelectorAll('.tab-content').forEach(content => {
             content.classList.remove('active');
         });
         document.getElementById(tabName).classList.add('active');
 
-        // Show appropriate rankings
         switch(tabName) {
             case 'richest':
                 this.showRichest();
@@ -75,7 +70,7 @@ class NationsRankings {
             stats: [
                 { label: `${nation.territories.length} cities` },
                 { label: `${nation.total_chunks.toLocaleString()} chunks` },
-                { label: `${nation.unique_players} players` }
+                { label: `${nation.total_players} players` }
             ]
         }));
     }
@@ -90,18 +85,18 @@ class NationsRankings {
             stats: [
                 { label: `${nation.territories.length} cities` },
                 { label: this.formatCurrency(nation.total_balance) },
-                { label: `${nation.unique_players} players` }
+                { label: `${nation.total_players} players` }
             ]
         }));
     }
 
     showPopulous() {
         const sorted = [...this.nations]
-            .filter(nation => nation.unique_players > 0)
-            .sort((a, b) => b.unique_players - a.unique_players);
+            .filter(nation => nation.total_players > 0)
+            .sort((a, b) => b.total_players - a.total_players);
 
         this.renderRankings('populous-list', sorted, (nation) => ({
-            primary: nation.unique_players.toLocaleString(),
+            primary: nation.total_players.toLocaleString(),
             stats: [
                 { label: `${nation.territories.length} cities` },
                 { label: `${nation.total_chunks.toLocaleString()} chunks` },
