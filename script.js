@@ -17,10 +17,12 @@ class NationsRankings {
                 throw new Error(`HTTP error ${response.status}`);
             }
             const data = await response.json();
+            
+            // Apply nation merges
+            this.nations = this.mergeNations(data);
 
-            console.log('First nation:', data[0]);
-            this.nations = data;
             console.log(`Loaded ${this.nations.length} nations`);
+            console.log('First nation:', this.nations[0]);
         } catch (error) {
             console.error('Error loading nation data:', error);
             this.nations = [];
@@ -59,6 +61,22 @@ class NationsRankings {
                 break;
         }
     }
+    
+    // Updated to use unique_players for population
+    showPopulous() {
+        const sorted = [...this.nations]
+            .filter(nation => nation.unique_players > 0)
+            .sort((a, b) => b.unique_players - a.unique_players);
+
+        this.renderRankings('populous-list', sorted, (nation) => ({
+            primary: nation.unique_players.toLocaleString(),
+            stats: [
+                { label: `${nation.territories.length} cities` },
+                { label: `${nation.total_chunks.toLocaleString()} chunks` },
+                { label: this.formatCurrency(nation.total_balance) }
+            ]
+        }));
+    }
 
     showRichest() {
         const sorted = [...this.nations]
@@ -70,7 +88,7 @@ class NationsRankings {
             stats: [
                 { label: `${nation.territories.length} cities` },
                 { label: `${nation.total_chunks.toLocaleString()} chunks` },
-                { label: `${nation.total_players} players` }
+                { label: `${nation.unique_players} players` }
             ]
         }));
     }
@@ -85,24 +103,72 @@ class NationsRankings {
             stats: [
                 { label: `${nation.territories.length} cities` },
                 { label: this.formatCurrency(nation.total_balance) },
-                { label: `${nation.total_players} players` }
+                { label: `${nation.unique_players} players` }
             ]
         }));
     }
 
-    showPopulous() {
-        const sorted = [...this.nations]
-            .filter(nation => nation.total_players > 0)
-            .sort((a, b) => b.total_players - a.total_players);
-
-        this.renderRankings('populous-list', sorted, (nation) => ({
-            primary: nation.total_players.toLocaleString(),
-            stats: [
-                { label: `${nation.territories.length} cities` },
-                { label: `${nation.total_chunks.toLocaleString()} chunks` },
-                { label: this.formatCurrency(nation.total_balance) }
+    // New method to merge nations based on the provided groups
+    mergeNations(data) {
+        const mergeGroups = {
+            "Imperial Crownlands of Osentar": [
+                "MayraSovereignty", "Vinovia", "Lenoria", "Osentar",
+                "osentar_newteritory", "Kutaiyara", "Orion", "Nova_Stellare",
+            ],
+            "Eternal Empire of Bardonia": [
+                "Bardonia", "Seneca-Diarchy", "Varaxis-Imperium", "Regnum_Aquilarum"
             ]
-        }));
+        };
+
+        const mergedNations = new Map();
+        const nationsToMerge = new Set(Object.values(mergeGroups).flat());
+
+        for (const nation of data) {
+            let isMerged = false;
+            for (const [groupName, members] of Object.entries(mergeGroups)) {
+                if (members.includes(nation.name)) {
+                    if (!mergedNations.has(groupName)) {
+                        mergedNations.set(groupName, {
+                            name: groupName,
+                            level: 'Empire', // Set a default level for the merged group
+                            territories: new Set(),
+                            total_chunks: 0,
+                            total_balance: 0,
+                            unique_players: new Set(),
+                        });
+                    }
+                    
+                    const mergedGroup = mergedNations.get(groupName);
+                    mergedGroup.total_chunks += nation.total_chunks;
+                    mergedGroup.total_balance += nation.total_balance;
+                    nation.territories.forEach(t => mergedGroup.territories.add(t));
+                    nation.all_players.forEach(p => mergedGroup.unique_players.add(p));
+
+                    isMerged = true;
+                    break;
+                }
+            }
+            if (!isMerged && !nationsToMerge.has(nation.name)) {
+                mergedNations.set(nation.name, {
+                    ...nation,
+                    territories: new Set(nation.territories),
+                    unique_players: new Set(nation.all_players),
+                });
+            }
+        }
+
+        // Convert sets back to arrays and format data
+        const finalNations = [];
+        for (const nation of mergedNations.values()) {
+            finalNations.push({
+                ...nation,
+                territories: Array.from(nation.territories),
+                unique_players: nation.unique_players.size,
+                all_players: Array.from(nation.unique_players)
+            });
+        }
+        
+        return finalNations;
     }
 
     renderRankings(containerId, nations, getDisplayData) {
