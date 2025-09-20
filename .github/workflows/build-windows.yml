@@ -1,39 +1,30 @@
-name: Build Windows EXE
+name: build-windows
 
 on:
-  workflow_dispatch:    # manual run from Actions page
-  push:
-    branches: [ main ]  # builds on pushes to main
+  workflow_dispatch:
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: "source code"
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          # install project deps and pyinstaller
+          pip install --upgrade pip
           pip install pyinstaller requests beautifulsoup4
 
       - name: Build Windows EXE
-        run: |
-          # build a single-file executable and name it StoneworksScraper.exe
-          pyinstaller --onefile --noconsole --name StoneworksScraper main.py
+        run: pyinstaller --onefile "source code/main.py" --name StoneworksScraper
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
         with:
           name: StoneworksScraper-win
-          path: dist/**/*
+          path: dist/StoneworksScraper.exe
