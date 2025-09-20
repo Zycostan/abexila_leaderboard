@@ -15,7 +15,7 @@ have atleast 4 braincells
 5. right click on `markers?(numbers).json` → **Copy** → **Copy URL**.
 6. paste that into `main.py` inside the `url = "..."` line.
 
-### 2. Fetch Marker Data
+### 2. Fetch Data
 
 Run:
 
@@ -23,36 +23,9 @@ Run:
 python main.py
 ```
 
-downloads stuff as `markers.json`.
+downloads stuff as `nations_comprehensive.json`.
 
-### 3. Process Marker Data
-
-Run:
-
-```
-python mark.py
-```
-extracts the .json into `markers.txt`.
-
-### 4. Nation Wealth
-
-Run:
-
-```
-python nat_wealth.py
-```
-
-parses `markers.txt` and outpus nat wealth into `balance.txt`.
-
-### 5. Nation Chunks lmao
-
-Run:
-
-```
-python nat_chunks.py
-```
-
-parses `markers.txt` and puts it into `chunks.txt`.
+thats all, its done.
 
 ```
 Note: I DID NOT MAKE THE WEBSITE
