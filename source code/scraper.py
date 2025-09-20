@@ -277,31 +277,31 @@ class StoneworksDataScraper:
     def save_data_to_files(self):
         """Save all scraped data to files"""
         self.log("Saving data to files...")
-        
+
         # Save coordinates
         if self.coordinates_data:
-            with open('coordinates.csv', 'w', newline='') as f:
+            with open('coordinates.csv', 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['X', 'Y', 'Z'])
                 for x, y, z in self.coordinates_data:
                     writer.writerow([x, y, z])
             self.log(f"Saved {len(self.coordinates_data)} coordinates to coordinates.csv")
-            
+
         # Save nations comprehensive data
         if self.nations_data:
-            with open('nations_comprehensive.json', 'w') as f:
-                json.dump(self.nations_data, f, indent=2)
+            with open('nations_comprehensive.json', 'w', encoding='utf-8') as f:
+                json.dump(self.nations_data, f, indent=2, ensure_ascii=False)
             self.log(f"Saved {len(self.nations_data)} nations to nations_comprehensive.json")
-            
+
         # Save territories data  
         if self.territories_data:
-            with open('territories_data.json', 'w') as f:
-                json.dump(self.territories_data, f, indent=2)
+            with open('territories_data.json', 'w', encoding='utf-8') as f:
+                json.dump(self.territories_data, f, indent=2, ensure_ascii=False)
             self.log(f"Saved {len(self.territories_data)} territories to territories_data.json")
-            
+
         # Save balances data
         if self.territories_data:
-            with open('balances.csv', 'w', newline='') as f:
+            with open('balances.csv', 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['Territory', 'Nation', 'Balance', 'Level', 'Chunks'])
                 for territory in self.territories_data:
@@ -313,10 +313,10 @@ class StoneworksDataScraper:
                         territory.get('chunks', 0)
                     ])
             self.log(f"Saved balance data for {len(self.territories_data)} territories to balances.csv")
-            
+
         # Save population data
         if self.territories_data:
-            with open('population_detailed.csv', 'w', newline='') as f:
+            with open('population_detailed.csv', 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['Territory', 'Nation', 'Player_Count', 'Players'])
                 for territory in self.territories_data:
@@ -328,10 +328,10 @@ class StoneworksDataScraper:
                         players_str
                     ])
             self.log(f"Saved detailed population data to population_detailed.csv")
-            
+
         # Save chunk data
         if self.territories_data:
-            with open('chunks_data.csv', 'w', newline='') as f:
+            with open('chunks_data.csv', 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['Territory', 'Nation', 'Chunks', 'Territory_Area', 'Coordinates_Count'])
                 for territory in self.territories_data:
@@ -343,7 +343,7 @@ class StoneworksDataScraper:
                         territory.get('coordinate_count', 0)
                     ])
             self.log(f"Saved chunk data for {len(self.territories_data)} territories to chunks_data.csv")
-            
+
         # Calculate totals and validate consistency
         total_balance = sum(t.get('balance', 0) for t in self.territories_data)
         total_chunks = sum(t.get('chunks', 0) for t in self.territories_data)
@@ -351,10 +351,10 @@ class StoneworksDataScraper:
         unique_players = set()
         for t in self.territories_data:
             unique_players.update(t.get('players', []))
-        
+
         # Validation checks
         coordinate_count_check = sum(t.get('coordinate_count', 0) for t in self.territories_data)
-        
+
         summary = {
             'scraping_completed': time.strftime('%Y-%m-%d %H:%M:%S'),
             'data_source': 'BlueMap Live Markers API',
@@ -376,10 +376,10 @@ class StoneworksDataScraper:
                 'scraping_summary.json'
             ]
         }
-        
-        with open('scraping_summary.json', 'w') as f:
-            json.dump(summary, f, indent=2)
-            
+
+        with open('scraping_summary.json', 'w', encoding='utf-8') as f:
+            json.dump(summary, f, indent=2, ensure_ascii=False)
+
         self.log("=== DATA SAVING COMPLETED ===")
         self.log(f"📊 FINAL STATISTICS:")
         self.log(f"  • {len(self.coordinates_data):,} coordinate points")
@@ -388,6 +388,7 @@ class StoneworksDataScraper:
         self.log(f"  • ${total_balance:,.2f} total server economy")
         self.log(f"  • {total_chunks:,} total claimed chunks")
         self.log(f"  • {total_players:,} total players")
+
         
     def scrape_bluemap_markers(self):
         """
