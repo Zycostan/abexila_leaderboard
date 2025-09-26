@@ -1,4 +1,4 @@
-sc### How to make your own:
+### How to make your own:
 ## Requirements
 
 have python 3.8+ and
