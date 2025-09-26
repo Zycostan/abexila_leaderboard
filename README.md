@@ -12,7 +12,7 @@ have atleast 4 braincells
 2. Press **F12** on your keyboard
 3. navigate to le **Network** tab.
 4. Search for **markers**.
-5. right click on `markers?(numbers).json` → **Copy** → **Copy URL**.
+5. right click on `markers?(numbers).json` -> **Copy** -> **Copy URL**.
 6. paste that into `scraper.py` inside the `url = "..."` line.
 
 ### 2. Fetch Data
@@ -20,7 +20,7 @@ have atleast 4 braincells
 Run:
 
 ```
-python scraper.py
+python main.py
 ```
 
 downloads stuff as `nations_comprehensive.json`.
